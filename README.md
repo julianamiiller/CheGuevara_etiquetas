@@ -53,12 +53,6 @@ CheGuevara_etiquetas/
 - **Logs e arquivos temporários:** são ignorados (`*.log`, `*.tmp`).
 - **Variáveis de ambiente:** caso precise de configurações sensíveis crie um arquivo `.env` (não versionado) e adicione a chave ao `.gitignore`.
 
-## 🤝 Contribuindo
-1. Fork este repositório.
-2. Crie uma branch para sua feature: `git checkout -b minha-feature`.
-3. Commit suas mudanças e abra um Pull Request.
-4. Certifique‑se de que o **linters** (`npm run lint` – opcional) e os testes (se houver) passem antes de submeter.
-
 ## 📄 Licença
 Este projeto está licenciado sob a **MIT License** – veja o arquivo `LICENSE` para mais detalhes.
 
