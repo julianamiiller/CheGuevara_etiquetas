@@ -1,8 +1,7 @@
-# EtiqueHosp – Sistema de Etiquetas de Refeição
+# Sistema de Etiquetas de Refeição Hospital Municipal Dr. Ernesto Che Guevara (HMDECG)
 
 > **Projeto:** `CheGuevara_etiquetas`
 > **Autor:** Juliana Miiller
-> **Repositório:** https://github.com/julianamiiller/CheGuevara_etiquetas
 
 ## 📋 Visão geral
 Este repositório contém a aplicação web utilizada pelo Hospital Municipal **Dr. Ernesto Che Guevara** (Maricá) para gerar etiquetas de refeição dos pacientes. A solução é composta por:
