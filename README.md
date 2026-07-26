@@ -1,8 +1,5 @@
 # Sistema de Etiquetas de Refeição Hospital Municipal Dr. Ernesto Che Guevara (HMDECG)
 
-> **Projeto:** `CheGuevara_etiquetas`
-> **Autor:** Juliana Miiller
-
 ## 📋 Visão geral
 Este repositório contém a aplicação web utilizada pelo Hospital Municipal **Dr. Ernesto Che Guevara** (Maricá) para gerar etiquetas de refeição dos pacientes. A solução é composta por:
 
