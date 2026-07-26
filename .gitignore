@@ -1,0 +1,38 @@
+# ---- Dependências ----
+/backend/node_modules/
+/frontend/node_modules/
+
+# ---- Build / Distribuição ----
+/dist/
+/build/
+
+# ---- Logs / Temporários ----
+*.log
+*.tmp
+*.swp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---- Sistema ----
+Thumbs.db
+.DS_Store
+
+# ---- Variáveis de ambiente ----
+.env
+.env.*
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+*.code-workspace
+
+# ---- Cache / Backup ----
+*.cache
+*.bak
+*.old
+
+# ---- Cobertura de testes / Relatórios ----
+coverage/
+.nyc_output/
+*.lcov

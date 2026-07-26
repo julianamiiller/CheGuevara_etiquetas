@@ -1,0 +1,16 @@
+{
+  "name": "etiquehosp-backend",
+  "version": "2.0.0",
+  "description": "Backend persistente para o sistema de etiquetas EtiqueHosp",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "pdf-parse": "^2.4.5"
+  },
+  "author": "Cozinha HM Ernesto Che Guevara",
+  "license": "ISC"
+}

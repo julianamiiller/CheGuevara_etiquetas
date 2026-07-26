@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EtiqueHosp — Cozinha HM Dr. Ernesto Che Guevara</title>
+  <meta name="description" content="Sistema de etiquetas de refeição — Hospital Municipal Dr. Ernesto Che Guevara, Maricá">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logos">
+        <img src="logo_hospital.png" alt="Hospital Municipal" class="hosp-logo-img">
+        <div class="hosp-logo-sep"></div>
+        <img src="logo_marica.png" alt="Prefeitura de Maricá" class="hosp-logo-img">
+      </div>
+      <div>
+        <div class="brand-name">Etiquetas</div>
+        <div class="brand-sub">Hospital Municipal Dr. Ernesto Che Guevara</div>
+      </div>
+    </div>
+
+    <div class="meal-pill-group" id="mealPills">
+      <button class="meal-pill" data-meal="desjejum">☕ Desjejum</button>
+      <button class="meal-pill" data-meal="colacao">🍎 Colação</button>
+      <button class="meal-pill active" data-meal="almoco">🍽️ Almoço</button>
+      <button class="meal-pill" data-meal="lanche">🥪 Lanche</button>
+      <button class="meal-pill" data-meal="jantar">🌙 Jantar</button>
+      <button class="meal-pill" data-meal="ceia">🌛 Ceia</button>
+    </div>
+
+    <div class="header-right">
+      <div class="date-display">
+        <input type="date" id="dateInput" class="date-input">
+      </div>
+      <button class="btn-theme-toggle" id="btnThemeToggle" title="Alternar tema">🌙</button>
+      <button class="btn-manual" id="btnManual">✏️ Manual</button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="main">
+
+  <!-- Upload -->
+  <section class="upload-wrap" id="uploadWrap">
+    <div class="upload-zone" id="uploadZone">
+      <div class="upload-glow"></div>
+      <div class="upload-content">
+        <div class="upload-icon">📄</div>
+        <h2>Arraste o Mapa PDF aqui</h2>
+        <p>O sistema lê automaticamente e organiza por setor</p>
+        <button class="btn-select" id="btnSelectFile">Selecionar PDF</button>
+        <input type="file" id="pdfInput" accept=".pdf" hidden>
+      </div>
+    </div>
+  </section>
+
+  <!-- Status -->
+  <div class="toast" id="toast" hidden>
+    <span class="toast-spinner" id="toastSpinner"></span>
+    <span id="toastMsg"></span>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="stats-bar" id="statsBar" hidden>
+    <div class="stat-item">
+      <span class="stat-label">Setores</span>
+      <span class="stat-value" id="statSetores">0</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-label">Total de Pacientes</span>
+      <span class="stat-value" id="statPacientes">0</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-label">Refeição Selecionada</span>
+      <span class="stat-value meal-name" id="statRefeicao">Almoço</span>
+    </div>
+    <div class="stats-actions">
+      <button class="btn-print-all" id="btnPrintAll">🖨️ Imprimir Todos os Setores</button>
+    </div>
+  </div>
+
+  <!-- Dashboard de Setores -->
+  <section class="dashboard" id="dashboard"></section>
+
+</main>
+
+<!-- ══════════════ MODAL MANUAL ══════════════ -->
+<div class="modal-overlay" id="modalOverlay" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <h3>➕ Adicionar Paciente</h3>
+      <button class="modal-x" id="btnCloseModal">✕</button>
+    </div>
+    <div class="modal-layout">
+      <div class="modal-form">
+        <div class="modal-body">
+          <div class="fg span2">
+            <label>Setor / Enfermaria</label>
+            <input id="fSetor" list="sectoresList" placeholder="Selecione ou digite o setor...">
+            <datalist id="sectoresList">
+              <option value="CLÍNICA MÉDICA"></option>
+              <option value="ENFERMARIA CIRÚRGICA 1"></option>
+              <option value="ENFERMARIA CIRÚRGICA 2"></option>
+              <option value="PEDIATRIA"></option>
+              <option value="UTI"></option>
+              <option value="ISOLAMENTO"></option>
+              <option value="OBSERVAÇÃO FEMININA"></option>
+              <option value="OBSERVAÇÃO MASCULINA"></option>
+              <option value="SALA VERMELHA"></option>
+              <option value="SALA AMARELA"></option>
+            </datalist>
+          </div>
+          <div class="fg">
+            <label>Leito</label>
+            <input id="fLeito" placeholder="Ex: 01">
+          </div>
+          <div class="fg">
+            <label>DN</label>
+            <input id="fDN" placeholder="DD/MM/AAAA">
+          </div>
+          <div class="fg span2">
+            <label>Nome do Paciente</label>
+            <input id="fNome" placeholder="Nome completo">
+          </div>
+          <div class="fg">
+            <label>Tipo de Dieta</label>
+            <input id="fDieta" list="dietaList" placeholder="Selecione ou digite o tipo de dieta...">
+            <datalist id="dietaList">
+              <option value="LIVRE"></option>
+              <option value="BRANDA"></option>
+              <option value="PASTOSA"></option>
+              <option value="LÍQUIDA"></option>
+              <option value="SEMI-LÍQUIDA"></option>
+              <option value="LEVE"></option>
+              <option value="ZERO (JEJUM)"></option>
+              <option value="DIABETES (DB)"></option>
+              <option value="HIPOSSÓDICA (HAS)"></option>
+              <option value="ENTERAL"></option>
+            </datalist>
+          </div>
+          <div class="fg">
+            <label>Dieta Zero?</label>
+            <select id="fDietaZero">
+              <option value="nao" selected>NÃO</option>
+              <option value="sim">SIM</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Consumo Imediato?</label>
+            <select id="fConsumo">
+              <option value="nao">NÃO</option>
+              <option value="sim" selected>SIM</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Precaução de Contato?</label>
+            <select id="fPrecaucao">
+              <option value="nao">NÃO</option>
+              <option value="sim" selected>SIM</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Tem Acompanhante?</label>
+            <select id="fAcompanhante">
+              <option value="nao" selected>NÃO</option>
+              <option value="sim">SIM</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Restrição Hídrica (Hídrica)</label>
+            <input id="fHidrica" placeholder="Ex: 500ml/dia ou Sem restrições">
+          </div>
+          <div class="fg span2">
+            <label>Instruções / Restrições (área direita da etiqueta)</label>
+            <textarea id="fRestricoes" rows="3" placeholder="Restrições, volume, horários..."></textarea>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn-cancel" id="btnCancelModal">Cancelar</button>
+          <button class="btn-add" id="btnAddPatient">✔ Adicionar</button>
+        </div>
+      </div>
+      <div class="modal-preview-pane">
+        <h4 style="margin-bottom: 12px; font-size: 13px; color: var(--text2); text-transform: uppercase; font-weight: 600; text-align: center;">Pré-visualização em Tempo Real</h4>
+        <div id="livePreviewContainer" class="preview-content" style="padding: 0; align-items: flex-start;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PREVIEW MODAL ══════════════ -->
+<div class="preview-overlay" id="previewOverlay" hidden>
+  <div class="preview-modal">
+    <div class="preview-header">
+      <h3>👁️ Pré-visualização da Etiqueta</h3>
+      <button class="modal-x" id="btnClosePreview">✕</button>
+    </div>
+    <div class="preview-content" id="previewContent"></div>
+    <div class="preview-footer">
+      <button class="btn-cancel" id="btnClosePreview2">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js?v=2"></script>
+</body>
+</html>
